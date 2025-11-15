@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Кейсы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --common: #a8a8a8;
+            --rare: #55aaff;
+            --legendary: #ffaa00;
+            --mythic: #ff55ff;
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --card-bg: #1e1e1e;
+            --text: #ffffff;
+            --accent: #00a8ff;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 168, 255, 0.1), transparent);
+            z-index: 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--accent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .balance-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .balance {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid var(--accent);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+        }
+
+        .balance i {
+            color: gold;
+        }
+
+        .cases-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .case {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .case::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+        }
+
+        .case:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .case-common {
+            border-color: var(--common);
+            color: var(--common);
+        }
+
+        .case-rare {
+            border-color: var(--rare);
+            color: var(--rare);
+        }
+
+        .case-legendary {
+            border-color: var(--legendary);
+            color: var(--legendary);
+        }
+
+        .case-mythic {
+            border-color: var(--mythic);
+            color: var(--mythic);
+        }
+
+        .case-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .case-price {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .case-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9rem;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .item-icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .empty {
+            background: rgba(255, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty .item-icon {
+            opacity: 0.5;
+        }
+
+        .open-btn {
+            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .open-btn:hover {
+            background: linear-gradient(to bottom, #66BB6A, #388E3C);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .open-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .result-content {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            border: 3px solid;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 30px currentColor;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            z-index: 0;
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-item {
+            font-size: 1.8rem;
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            border: 2px solid;
+        }
+
+        .result-item-icon {
+            font-size: 2.5rem;
+        }
+
+        .close-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .close-btn:hover {
+            background: #ff5555;
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px currentColor; }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px currentColor; }
+            100% { transform: scale(1); box-shadow: 0 0 20px currentColor; }
+        }
+
+        @keyframes openCase {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.2) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .history {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .history-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .history-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .history-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .history-item {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .negative {
+            color: #ff5555;
+        }
+
+        .positive {
+            color: #55ff55;
+        }
+
+        .rarity-common {
+            color: var(--common);
+        }
+
+        .rarity-rare {
+            color: var(--rare);
+        }
+
+        .rarity-legendary {
+            color: var(--legendary);
+        }
+
+        .rarity-mythic {
+            color: var(--mythic);
+        }
+
+        .case-opening {
+            animation: openCase 0.5s ease-in-out;
+        }
+
+        /* Анимация прокрутки кейса */
+        .scroll-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .scroll-container {
+            width: 90%;
+            max-width: 1000px;
+            height: 300px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 40px var(--accent);
+            padding: 20px;
+        }
+
+        .scroll-items {
+            display: flex;
+            height: 100%;
+            transition-timing-function: cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        .scroll-item {
+            min-width: 200px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .scroll-item.active {
+            border-color: gold;
+            box-shadow: 0 0 20px gold;
+            transform: scale(1.05);
+        }
+
+        .scroll-item-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: gold;
+            text-shadow: 0 0 20px gold;
+            z-index: 10;
+            animation: arrowPulse 1s infinite alternate;
+        }
+
+        @keyframes arrowPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .scroll-timer {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--accent);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .cases-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cases-container {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .case-title {
+                font-size: 1.5rem;
+            }
+
+            .case-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .balance-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .scroll-container {
+                width: 95%;
+                height: 200px;
+            }
+
+            .scroll-item {
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .case-items {
+                grid-template-columns: 1fr;
+            }
+
+            .result-item {
+                font-size: 1.4rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .history-item {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+
+            .scroll-container {
+                height: 180px;
+                padding: 10px;
+            }
+
+            .scroll-item {
+                min-width: 120px;
+                margin: 0 5px;
+                font-size: 1rem;
+            }
+
+            .scroll-item-icon {
+                font-size: 2.5rem;
+            }
+
+            .scroll-arrow {
+                font-size: 3rem;
+            }
+        }
+
+        .floating-items {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .floating-item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            animation: float 3s ease-in-out forwards;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-items" id="floatingItems"></div>
+
+    <!-- Анимация прокрутки -->
+    <div class="scroll-animation" id="scrollAnimation">
+        <div class="scroll-container">
+            <div class="scroll-arrow">▼</div>
+            <div class="scroll-items" id="scrollItems"></div>
+        </div>
+        <div class="scroll-timer" id="scrollTimer">Прокрутка...</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-gem"></i> Minecraft Кейсы</h1>
+            <p class="subtitle">Открывайте кейсы и получайте редкие предметы!</p>
+            <div class="balance-container">
+                <div class="balance">
+                    <i class="fas fa-coins"></i>
+                    <span>Монеты: <span id="coins">1000</span></span>
+                </div>
+                <div class="balance">
+                    <i class="fas fa-gem"></i>
+                    <span>Рубины: <span id="rubies">500</span></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="cases-container">
+            <!-- Обычный кейс -->
+            <div class="case case-common" data-type="common">
+                <h2 class="case-title"><i class="fas fa-box"></i> Обычный Кейс</h2>
+                <div class="case-price"><i class="fas fa-coins"></i> Цена: 50 монет</div>
+                <div class="case-items">
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shoe-prints"></i></div>
+                        <div>Алмазные ботинки</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hard-hat"></i></div>
+                        <div>Алмазный шлем</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-tshirt"></i></div>
+                        <div>Железные штаны</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-vest"></i></div>
+                        <div>Железный нагрудник</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-sword"></i></div>
+                        <div>Железный меч</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shovel"></i></div>
+                        <div>Алмазная лопата</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-coins"></i></div>
+                        <div>50 монет</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-gem"></i></div>
+                        <div>50 рубинов</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                </div>
+                <button class="open-btn" data-price="50" data-currency="coins">
+                    <i class="fas fa-lock-open"></i> Открыть за 50 монет
+                </button>
+            </div>
+
+            <!-- Редкий кейс -->
+            <div class="case case-rare" data-type="rare">
+                <h2 class="case-title"><i class="fas fa-box-open"></i> Редкий Кейс</h2>
+                <div class="case-price"><i class="fas fa-coins"></i> Цена: 70 монет</div>
+                <div class="case-items">
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-tshirt"></i></div>
+                        <div>Алмазные штаны</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-vest"></i></div>
+                        <div>Железный нагрудник</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shoe-prints"></i></div>
+                        <div>Алмазные ботинки</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hard-hat"></i></div>
+                        <div>Незер шлем</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-sword"></i></div>
+                        <div>Алмазный меч</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hatchet"></i></div>
+                        <div>Железный топор</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-coins"></i></div>
+                        <div>70 монет</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-gem"></i></div>
+                        <div>70 рубинов</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                </div>
+                <button class="open-btn" data-price="70" data-currency="coins">
+                    <i class="fas fa-lock-open"></i> Открыть за 70 монет
+                </button>
+            </div>
+
+            <!-- Легендарный кейс -->
+            <div class="case case-legendary" data-type="legendary">
+                <h2 class="case-title"><i class="fas fa-crown"></i> Легендарный Кейс</h2>
+                <div class="case-price"><i class="fas fa-coins"></i> Цена: 120 монет</div>
+                <div class="case-items">
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-tshirt"></i></div>
+                        <div>Незер штаны</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shoe-prints"></i></div>
+                        <div>Незер ботинки</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hard-hat"></i></div>
+                        <div>Незер шлем</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-vest"></i></div>
+                        <div>Алмазный нагрудник</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-sword"></i></div>
+                        <div>Алмазный меч</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-coins"></i></div>
+                        <div>120 монет</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-gem"></i></div>
+                        <div>120 рубинов</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hatchet"></i></div>
+                        <div>Алмазный топор</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-pickaxe"></i></div>
+                        <div>Алмазная кирка</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                </div>
+                <button class="open-btn" data-price="120" data-currency="coins">
+                    <i class="fas fa-lock-open"></i> Открыть за 120 монет
+                </button>
+            </div>
+
+            <!-- Мифический кейс -->
+            <div class="case case-mythic" data-type="mythic">
+                <h2 class="case-title"><i class="fas fa-fire"></i> Мифический Кейс</h2>
+                <div class="case-price"><i class="fas fa-coins"></i> Цена: 150 монет</div>
+                <div class="case-items">
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-tshirt"></i></div>
+                        <div>Незер штаны</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hard-hat"></i></div>
+                        <div>Незер шлем</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-vest"></i></div>
+                        <div>Незер нагрудник</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shoe-prints"></i></div>
+                        <div>Незер ботинки</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-sword"></i></div>
+                        <div>Незер меч</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-pickaxe"></i></div>
+                        <div>Незер кирка</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-hatchet"></i></div>
+                        <div>Незер топор</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-shovel"></i></div>
+                        <div>Незер лопата</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-gun"></i></div>
+                        <div>Автомат Томсон</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-coins"></i></div>
+                        <div>150 монет</div>
+                    </div>
+                    <div class="item">
+                        <div class="item-icon"><i class="fas fa-gem"></i></div>
+                        <div>150 рубинов</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                    <div class="item empty">
+                        <div class="item-icon"><i class="fas fa-times"></i></div>
+                        <div>Пусто</div>
+                    </div>
+                </div>
+                <button class="open-btn" data-price="150" data-currency="coins">
+                    <i class="fas fa-lock-open"></i> Открыть за 150 монет
+                </button>
+            </div>
+        </div>
+
+        <div class="history">
+            <h2 class="history-title"><i class="fas fa-history"></i> История открытий</h2>
+            <div class="history-list" id="historyList">
+                <!-- История будет добавляться сюда -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно с результатом -->
+    <div class="result-modal" id="resultModal">
+        <div class="result-content" id="resultContent">
+            <h2 class="result-title" id="resultTitle">Поздравляем!</h2>
+            <div class="result-item" id="resultItem">
+                <div class="result-item-icon" id="resultItemIcon"></div>
+                <div id="resultItemText">Вы выиграли: Алмазный меч</div>
+            </div>
+            <button class="close-btn" id="closeModal">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация данных
+        let coins = 1000;
+        let rubies = 500;
+        let history = [];
+
+        // Обновление баланса на странице
+        function updateBalance() {
+            document.getElementById('coins').textContent = coins;
+            document.getElementById('rubies').textContent = rubies;
+        }
+
+        // Получение всех предметов из кейса
+        function getCaseItems(caseType) {
+            const items = [];
+            const caseElement = document.querySelector(`.case[data-type="${caseType}"]`);
+            const itemElements = caseElement.querySelectorAll('.item:not(.empty)');
+
+            itemElements.forEach(item => {
+                const text = item.querySelector('div:last-child').textContent;
+                const icon = item.querySelector('.item-icon').innerHTML;
+                items.push({text, icon});
+            });
+
+            // Добавляем пустые ячейки (минусы)
+            const emptyCount = caseElement.querySelectorAll('.item.empty').length;
+            for (let i = 0; i < emptyCount; i++) {
+                items.push({text: "Пусто", icon: '<i class="fas fa-times"></i>'});
+            }
+
+            return items;
+        }
+
+        // Создание плавающих предметов
+        function createFloatingItems(count, icons) {
+            const container = document.getElementById('floatingItems');
+            container.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const item = document.createElement('div');
+                item.className = 'floating-item';
+                item.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(item);
+            }
+        }
+
+        // Анимация прокрутки кейса
+        function startScrollAnimation(caseType) {
+            const scrollAnimation = document.getElementById('scrollAnimation');
+            const scrollItems = document.getElementById('scrollItems');
+            const scrollTimer = document.getElementById('scrollTimer');
+
+            // Очистка предыдущих элементов
+            scrollItems.innerHTML = '';
+
+            // Получение всех предметов кейса
+            const items = getCaseItems(caseType);
+
+            // Создание элементов для прокрутки
+            items.forEach(item => {
+                const scrollItem = document.createElement('div');
+                scrollItem.className = 'scroll-item';
+                scrollItem.innerHTML = `
+                    <div class="scroll-item-icon">${item.icon}</div>
+                    <div>${item.text}</div>
+                `;
+                scrollItems.appendChild(scrollItem);
+            });
+
+            // Дублируем элементы для бесконечной прокрутки
+            const itemsClone = scrollItems.cloneNode(true);
+            scrollItems.appendChild(itemsClone);
+
+            // Показываем анимацию
+            scrollAnimation.style.display = 'flex';
+
+            // Начальные значения для анимации
+            let position = 0;
+            let speed = 100; // Начальная скорость (быстро)
+            let startTime = Date.now();
+            const totalDuration = 60000; // 60 секунд
+            let isSlowing = false;
+            let wonItem = null;
+
+            // Анимация прокрутки
+            const animation = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = elapsed / totalDuration;
+
+                // Первые 55 секунд - быстрая прокрутка
+                if (progress < 0.92) { // 55 секунд
+                    speed = 100;
+                    scrollTimer.textContent = "Прокрутка...";
+                }
+                // Последние 5 секунд - плавное замедление
+                else {
+                    if (!isSlowing) {
+                        isSlowing = true;
+                        // Случайно выбираем предмет для остановки
+                        const randomIndex = Math.floor(Math.random() * items.length);
+                        wonItem = items[randomIndex];
+                    }
+
+                    // Замедляем постепенно
+                    speed *= 0.95;
+                    scrollTimer.textContent = "Замедление...";
+
+                    if (speed < 0.5) {
+                        // Останавливаем анимацию и показываем результат
+                        setTimeout(() => {
+                            scrollAnimation.style.display = 'none';
+                            // Показываем результат в модальном окне
+                            if (wonItem.text === "Пусто") {
+                                showResult(wonItem, 'negative', 'К сожалению, вы ничего не выиграли', 'Увы...');
+                            } else {
+                                showResult(wonItem, 'positive', `Поздравляем! Вы выиграли: ${wonItem.text}`, 'Поздравляем!');
+
+                                // Добавление выигрыша в инвентарь
+                                if (wonItem.text.includes('монет')) {
+                                    const amount = parseInt(wonItem.text);
+                                    coins += amount;
+                                } else if (wonItem.text.includes('рубинов')) {
+                                    const amount = parseInt(wonItem.text);
+                                    rubies += amount;
+                                }
+                                updateBalance();
+
+                                // Создание плавающих предметов
+                                const icons = ['<i class="fas fa-coins"></i>', '<i class="fas fa-gem"></i>',
+                                              '<i class="fas fa-sword"></i>', '<i class="fas fa-tshirt"></i>'];
+                                createFloatingItems(15, icons);
+                            }
+
+                            // Добавление в историю
+                            const historyItem = {
+                                case: caseType,
+                                item: wonItem.text,
+                                class: wonItem.text === "Пусто" ? 'negative' : 'positive',
+                                timestamp: new Date().toLocaleTimeString()
+                            };
+
+                            history.unshift(historyItem);
+                            updateHistory();
+
+                        }, 1000);
+                        return;
+                    }
+                }
+
+                position -= speed;
+                scrollItems.style.transform = `translateX(${position}px)`;
+
+                // Обновляем активный элемент (под стрелкой)
+                updateActiveItem(position, items.length);
+
+                // Сброс позиции для бесконечной прокрутки
+                if (position < -items.length * 220) {
+                    position = 0;
+                }
+
+                // Продолжаем анимацию, если не закончилось время
+                if (progress < 1 || speed > 0.5) {
+                    requestAnimationFrame(animation);
+                }
+            };
+
+            // Запускаем анимацию
+            animation();
+        }
+
+        // Обновление активного элемента под стрелкой
+        function updateActiveItem(position, itemsCount) {
+            const scrollItems = document.querySelectorAll('.scroll-item');
+            const itemWidth = 220;
+            const currentIndex = Math.floor(Math.abs(position) / itemWidth) % itemsCount;
+
+            scrollItems.forEach((item, index) => {
+                item.classList.remove('active');
+                if (index === currentIndex) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Открытие кейса
+        function openCase(caseType, price, currency) {
+            // Проверка баланса
+            if ((currency === 'coins' && coins < price) || (currency === 'rubies' && rubies < price)) {
+                alert('Недостаточно средств!');
+                return;
+            }
+
+            // Анимация открытия кейса
+            const caseElement = document.querySelector(`.case[data-type="${caseType}"]`);
+            caseElement.classList.add('case-opening');
+            setTimeout(() => {
+                caseElement.classList.remove('case-opening');
+            }, 500);
+
+            // Списание стоимости
+            if (currency === 'coins') {
+                coins -= price;
+            } else {
+                rubies -= price;
+            }
+            updateBalance();
+
+            // Запуск анимации прокрутки
+            startScrollAnimation(caseType);
+        }
+
+        // Показать результат
+        function showResult(item, resultClass, resultText, resultTitle) {
+            const modal = document.getElementById('resultModal');
+            const resultItem = document.getElementById('resultItem');
+            const resultItemIcon = document.getElementById('resultItemIcon');
+            const resultItemText = document.getElementById('resultItemText');
+            const resultTitleElement = document.getElementById('resultTitle');
+
+            resultItemText.textContent = resultText;
+            resultItem.className = `result-item ${resultClass}`;
+            resultItemIcon.innerHTML = item.icon;
+            resultTitleElement.textContent = resultTitle;
+
+            // Установка цвета границы в зависимости от результата
+            if (resultClass === 'negative') {
+                modal.querySelector('.result-content').style.borderColor = '#ff5555';
+                modal.querySelector('.result-content').style.color = '#ff5555';
+            } else {
+                modal.querySelector('.result-content').style.borderColor = '#55ff55';
+                modal.querySelector('.result-content').style.color = '#55ff55';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        // Обновление истории
+        function updateHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+
+            history.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = `history-item ${item.class}`;
+
+                const caseName = getCaseName(item.case);
+                historyItem.innerHTML = `
+                    <span class="rarity-${item.case}">${caseName}</span>
+                    <span>${item.item}</span>
+                    <span>${item.timestamp}</span>
+                `;
+
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // Получение названия кейса
+        function getCaseName(caseType) {
+            switch(caseType) {
+                case 'common': return 'Обычный';
+                case 'rare': return 'Редкий';
+                case 'legendary': return 'Легендарный';
+                case 'mythic': return 'Мифический';
+                default: return caseType;
+            }
+        }
+
+        // Инициализация событий
+        document.addEventListener('DOMContentLoaded', function() {
+            updateBalance();
+            updateHistory();
+
+            // Обработчики для кнопок открытия кейсов
+            document.querySelectorAll('.open-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const caseElement = this.closest('.case');
+                    const caseType = caseElement.getAttribute('data-type');
+                    const price = parseInt(this.getAttribute('data-price'));
+                    const currency = this.getAttribute('data-currency');
+
+                    openCase(caseType, price, currency);
+                });
+            });
+
+            // Закрытие модального окна
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('resultModal').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
